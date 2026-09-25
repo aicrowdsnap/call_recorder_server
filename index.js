@@ -250,16 +250,16 @@ app.post("/recordings", async (req, res) => {
     // Extract client ID (using conversation ID or a fallback placeholder if phone info isn't embedded directly)
     const clientId = req.body?.user_data || conversationUuid || "client-123";
 
-    console.log("Forwarding public URL to target endpoint: https://speech.crowdsnap.ai/api/process-config");
+    // console.log("Forwarding public URL to target endpoint: ", process.env.BASE_URL + "/api/process-config");
 
     // Post public URL to your another project endpoint
-    const processConfigResponse = await fetch("https://speech.crowdsnap.ai/api/process-config", {
+    const processConfigResponse = await fetch(process.env.BASE_URL + "/api/process-config", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        secret: "sk_live_51NvK8kJ4xQpLmNwRtZ9vBcDeFg2hIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz",
+        secret: process.env.API_SECRET ,
         link: publicAudioUrl,
         clientId: clientId,
       }),
